@@ -23,42 +23,44 @@ var address = ["1101 3rd Street, West Lafayette, IN 47906"]
 
     //var county;
     var city;
-    var office
+
 
 fetch('https://www.googleapis.com/civicinfo/v2/voterinfo?address=' + address + '&key=AIzaSyB4ocz-4NHCGXM8cTfXsYRSVU6Wlz_3g4o')
             .then(function(response)
             { return response.json(); })
             .then(function(json) {
               console.log(json);
-              //county = counties[i]
 
           });
           /*
           county
             JSONArray
-              office, name, social media, number, address, img
+              office, name, social media, number, address
           */
 
-  fetch('https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyB4ocz-4NHCGXM8cTfXsYRSVU6Wlz_3g4o&address=' + address +'&includeOffices=true')
+  fetch('https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyB4ocz-4NHCGXM8cTfXsYRSVU6Wlz_3g4o&address=' + address)
           .then(function(response)
           { return response.json(); })
           .then(function(json) {
           console.log(json);
-/*
-        var arrOffice = json.office
-
-
-
-*/
-
-
-
-
-
-
-          });
-
-
+          var officials = [];
+          for (var i in json.offices) {
+              var offIndices = i.officialIndices;
+              for (var j in offIndices) {
+                var k = 0;
+                for (l in officials) {
+                    if (k == j) {
+                        officials.push(l);
+                        console.log("Pushed");
+                        break;
+                    }
+                    k++;
+                }
+              }
+          }
+          console.log(officials);
+          console.log(offIndices);
+        });
 /*
 //Change Collection type if needed
   var reference = firebase.database().ref("usersCandiates");
